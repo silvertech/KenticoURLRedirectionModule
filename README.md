@@ -55,6 +55,7 @@ While it is technically possible to combine both language aliases and domain ali
 
 ## Module Overview
 The Kentico URL Redirection module contains one class, **Redirection Table**, that is not customizable. The class' fields are as follows:
+
 | Field Name  | Data Type | Form Control | Descrpiton |
 |--|--|--|--|
 | RedirectionTableID | Integer | N/A (Not Editable) | Unique ID of the redirection item |
