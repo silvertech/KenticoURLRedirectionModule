@@ -22,6 +22,7 @@ To update the module to a more recent version, simply update the NuGet package.
 **IMPORTANT -** Please note that there are a few limitations with this module that require that your site be configured a certain way to work properly. Look below and take note of the required setup for your configuration.
 
 **Single Site and Single Culture**
+
 If your site is a single domain and single culture, you **must** specify the default visitor culture as the default culture of your site. If this is not set, the redirects will not work. To do this, follow these steps:
 
  1. Go to Applications>Configuration>Sites
@@ -31,9 +32,11 @@ If your site is a single domain and single culture, you **must** specify the def
  4. Click **Save**
 
 **Multiple Sites and Single Culture**
+
 If your site is a single culture but multiple domains, then the above steps for "Single Site and Single Culture" must be done on **each** of your Kentico sites in your CMS.
 
 **Single Site and Multiple Cultures - Domain Aliases**
+
 If your site is a single site but uses different domain aliases for each culture then you must specify which language each domain:
 
  1. Follow the steps for "Single Site and Single Culture" and set the main domain's culture to your primary culture
@@ -42,15 +45,19 @@ If your site is a single site but uses different domain aliases for each culture
 ![Multiple Cultures Domain Aliases](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/Readme%20Assets/singlesite-domainaliases.png?raw=true)
 
 **Multiple Sites and Multiple Cultures - Domain Aliases**
+
 If you have multiple sites and unique domain aliases for the different culture on each site, then the above for "Single Site and Multiple Cultures - Domain Aliases" must be done on **each** of yoru Kentico sites in your CMS.
 
 **Single Site and Multiple Cultures - Language Aliases**
+
 If you have a single site that has multiple cultures but use language aliases as opposed to unique domain aliases, then no additional setup is needed. The main site domain will be used in conjunction with the configured language aliases to determine if a redirect applies to the site/culture.
 
 **Multiple Sites and Multiple Cultures - Language Aliases**
+
 Same as "Single Site and Multiple Cultures - Language Aliases"
 
 **Multiple Cultures - Language Aliases AND Domain Aliases**
+
 While it is technically possible to combine both language aliases and domain aliases on a site, this is not an officially supported use case of multiple cultures by Kentico and therefore is not supported by this module.
 
 ## Module Overview
