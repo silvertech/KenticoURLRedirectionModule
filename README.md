@@ -65,7 +65,7 @@ Same as "Single Site and Multiple Cultures - Language Aliases"
 
 **Multiple Cultures - Language Aliases AND Domain Aliases**
 
-While it is technically possible to combine both language aliases and domain aliases on a site, this is not an officially supported use case of multiple cultures by Kentico and therefore is not supported by this module.
+This module is not supported for sites utilizing a mixture of both language URL aliases and language sub-domains.
 
 ## Module Overview
 The Kentico URL Redirection module contains one class, **Redirection Table**, that is not customizable. The class' fields are as follows:
