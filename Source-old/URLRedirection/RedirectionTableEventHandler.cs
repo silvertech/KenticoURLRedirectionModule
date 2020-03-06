@@ -12,7 +12,7 @@ namespace URLRedirection
 {
     public class RedirectionTableEventHandler : Module
     {
-        public RedirectionTableEventHandler() : base("UrlRedirection_RedirectionTableEventHandler")
+        public RedirectionTableEventHandler() : base("CustomInit")
         {
 
         }
