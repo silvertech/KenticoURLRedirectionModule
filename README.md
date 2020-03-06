@@ -1,6 +1,6 @@
-[![Nuget](https://img.shields.io/badge/nuget-v12.0.2-blue.svg)](https://www.nuget.org/packages/KenticoURLRedirection/)
+[![Nuget](https://img.shields.io/badge/nuget-v12.0.3-blue.svg)](https://www.nuget.org/packages/KenticoURLRedirection/)
 # Kentico 12 URL Redirection Module
-This module adds an interface in the CMS to allow a user to edit and manage URL Redirects in one place. The module supports multi-site instances and multi-culture sites (more details below). The latest version of this module is Version 12.0.2. The source code for this module is included in this repo if you wish to clone and modify it anyway you see fit. 
+This module adds an interface in the CMS to allow a user to edit and manage URL Redirects in one place. The module supports multi-site instances and multi-culture sites (more details below). The latest version of this module is Version 12.0.3. The source code for this module is included in this repo if you wish to clone and modify it anyway you see fit. 
 
 ## Compatibility
 
@@ -10,23 +10,29 @@ This module adds an interface in the CMS to allow a user to edit and manage URL 
 
 ## Installation Instructions
 
-Install the latest version of the Kentico URL Redirection Admin [nuget package](https://www.nuget.org/packages/KenticoURLRedirection.Admin/) on your Kentico installation
-`Install-Package KenticoUrlRedirection.Admin`
-
-Aand if you have any MVC Sites, install the Kentico URL Redirection MVC [nuget package](https://www.nuget.org/packages/KenticoURLRedirection.MVC/)
-`Install-Package KenticoUrlRedirection.MVC`
+Install the latest version of the Kentico URL Redirection [nuget package](https://www.nuget.org/packages/KenticoURLRedirection/) to your **CMSApp** project `Install-Package KenticoUrlRedirection`. 
 
 After installation, rebuild and check the event log of the site and you should see a line like this:
 ![Module Installed Successfully](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/Readme%20Assets/moduleintalled-eventlog.png?raw=true)
 
 To update the module to a more recent version, simply update the NuGet package.
 
+**MVC Specific Setup**
+If you are installing this package into a site utilizing Kentico MVC, follow these steps:
+
+ 1. Like noted above, install the NuGet package to your **CMSApp** project
+ 2. Go to your MVC project/solution
+ 3. Right click on "References" and click on "Add Reference"
+ 4. Click on **Browse**
+ 5. Add a reference to **URLRedirection.dll**. The DLL can be fould at the path ~\*Project_Root*\packages\URLRedirection.12.0.3\lib
+ 6. Rebuild the project
+
 ## LIMITATIONS/REQUIRED SETUP
 **IMPORTANT -** Please note that there are a few requirements with this module in order to determine the proper domain the redirect should use when the target is a relative path.
 
 **Single Site and Single Culture**
 
-If your site is a single domain and single culture, you should specify the default visitor culture as the default culture of your site. If this is not set, the redirect will use the request's domain and may default to en-US culture if not deterined elsewise.
+If your site is a single domain and single culture, you should specify the default visitor culture as the default culture of your site. If this is not set, the redirect will use the request's domain and may default to en-US culture if not determined.
 
 To do this, follow these steps:
 
@@ -39,7 +45,7 @@ To do this, follow these steps:
 
 **Single Site and Multiple Cultures - Domain Aliases**
 
-If your site is a single site but uses different domain aliases for each culture then you must specify which language each domain if you wish the redirector to use these culture domain aliases when redirecting for the proper culture.
+If your site is a single site but uses different domain aliases for each culture then you must specify which language each domain is.
 
  1. Follow the steps for "Single Site and Single Culture" and set the main domain's culture to your primary culture
  2. Click on **Domain aliases** in the left hand tabs
@@ -91,3 +97,6 @@ Contributions to this module are welcome. All the source files for this module a
 
 ## Support
 Any bugs can be listed as issues here in GitHub or can be sent to our email alerts@silvertech.com. We will respond as soon as we can.
+
+## Special Thanks
+Special thanks to [KenticoDevTrev](https://github.com/KenticoDevTrev) and Heartland Business Systems for their large update to the module.
