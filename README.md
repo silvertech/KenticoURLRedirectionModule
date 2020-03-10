@@ -24,7 +24,7 @@ If you are installing this package into a site utilizing Kentico MVC, follow the
  2. Go to your MVC project/solution
  3. Right click on "References" and click on "Add Reference"
  4. Click on **Browse**
- 5. Add a reference to **URLRedirection.dll**. The DLL can be fould at the path ~\*Project_Root*\packages\URLRedirection.12.0.3\lib
+ 5. Add a reference to **URLRedirection.dll**. The DLL can be fould at the path ~\\*Project_Root*\packages\URLRedirection.12.0.3\lib
  6. Rebuild the project
 
 ## LIMITATIONS/REQUIRED SETUP
