@@ -6,15 +6,12 @@ using CMS;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyDiscoverable]
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("URL Redirection Module")]
-[assembly: AssemblyDescription("A module that adds support for adding and managing URL redirects through the Kentico CMS interface.")]
+[assembly: AssemblyTitle("URLRedirection")]
+[assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("SilverTech, Inc and Heartland Business Systems")]
-[assembly: AssemblyProduct("URLRedirection.Properties")]
-[assembly: AssemblyCopyright("Copyright ©  2020")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("URLRedirection")]
+[assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -24,7 +21,7 @@ using CMS;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("3b7738cb-282a-4665-8423-53f323616ab7")]
+[assembly: Guid("89006193-bc0f-4040-b822-03f79eb0ac9b")]
 
 // Version information for an assembly consists of the following four values:
 //
@@ -33,5 +30,7 @@ using CMS;
 //      Build Number
 //      Revision
 //
-[assembly: AssemblyVersion("12.0.3.0")]
-[assembly: AssemblyFileVersion("12.0.3.0")]
+// You can specify all the values or you can default the Revision and Build Numbers 
+// by using the '*' as shown below:
+[assembly: AssemblyVersion("12.0.2.0")]
+[assembly: AssemblyFileVersion("12.0.2.0")]

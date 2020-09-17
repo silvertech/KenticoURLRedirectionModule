@@ -1,7 +1,6 @@
 using System;
 using System.Data;
 using System.Runtime.Serialization;
-using System.Collections.Generic;
 
 using CMS;
 using CMS.DataEngine;
@@ -9,13 +8,13 @@ using CMS.Helpers;
 using URLRedirection;
 
 [assembly: RegisterObjectType(typeof(RedirectionTableInfo), RedirectionTableInfo.OBJECT_TYPE)]
-
+    
 namespace URLRedirection
 {
     /// <summary>
     /// Data container class for <see cref="RedirectionTableInfo"/>.
     /// </summary>
-    [Serializable]
+	[Serializable]
     public partial class RedirectionTableInfo : AbstractInfo<RedirectionTableInfo>
     {
         /// <summary>
@@ -27,44 +26,17 @@ namespace URLRedirection
         /// <summary>
         /// Type information.
         /// </summary>
-        public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(RedirectionTableInfoProvider), OBJECT_TYPE, "URLRedirection.RedirectionTable", "RedirectionTableID", "RedirectionTableLastModified", "RedirectionTableGuid", null, null, null, "RedirectionSiteID", null, null)
+        public static readonly ObjectTypeInfo TYPEINFO = new ObjectTypeInfo(typeof(RedirectionTableInfoProvider), OBJECT_TYPE, "URLRedirection.RedirectionTable", "RedirectionTableID", null, null, null, null, null, "RedirectionSiteID", null, null)
         {
-            ModuleName = "URLRedirection",
-            TouchCacheDependencies = true,
-            DependsOn = new List<ObjectDependency>()
-            {
-                new ObjectDependency("RedirectionSiteID", "cms.site", ObjectDependencyEnum.Required),
-            },
-            ImportExportSettings =
-            {
-                IsExportable = true,
-                ObjectTreeLocations = new List<ObjectTreeLocation>()
-                {
-                    // Adds the custom class into a new category in the Global objects section of the export tree
-                    new ObjectTreeLocation(GLOBAL, "Redirects"),
-                },
-            },
-            SynchronizationSettings =
-            {
-                LogSynchronization = SynchronizationTypeEnum.LogSynchronization,
-                ObjectTreeLocations = new List<ObjectTreeLocation>()
-                {
-                    // Adds the custom class into a new category in the Global objects section of the staging tree
-                    new ObjectTreeLocation(GLOBAL, "Redirects")
-                },
-            },
-            ContinuousIntegrationSettings =
-            {
-                Enabled = true
-            },
-            EnabledColumn = "RedirectionEnabled"
+			ModuleName = "URLRedirection",
+			TouchCacheDependencies = true,
         };
 
 
-        /// <summary>
+		/// <summary>
         /// Redirection table ID.
         /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual int RedirectionTableID
         {
             get
@@ -78,27 +50,10 @@ namespace URLRedirection
         }
 
 
-        /// <summary>
-        /// If unchecked, will not be used.
+		/// <summary>
+        /// Redirection original URL.
         /// </summary>
-        [DatabaseField]
-        public virtual bool RedirectionEnabled
-        {
-            get
-            {
-                return ValidationHelper.GetBoolean(GetValue("RedirectionEnabled"), true);
-            }
-            set
-            {
-                SetValue("RedirectionEnabled", value);
-            }
-        }
-
-
-        /// <summary>
-        /// The URL that the incoming request should match.  Recommended using relative urls like ~/MyPage.
-        /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual string RedirectionOriginalURL
         {
             get
@@ -112,27 +67,10 @@ namespace URLRedirection
         }
 
 
-        /// <summary>
-        /// If true, the Original Url must match exactly, including the query strings..
-        /// </summary>
-        [DatabaseField]
-        public virtual bool RedirectionExactMatch
-        {
-            get
-            {
-                return ValidationHelper.GetBoolean(GetValue("RedirectionExactMatch"), false);
-            }
-            set
-            {
-                SetValue("RedirectionExactMatch", value);
-            }
-        }
-
-
-        /// <summary>
+		/// <summary>
         /// Redirection target URL.
         /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual string RedirectionTargetURL
         {
             get
@@ -146,27 +84,10 @@ namespace URLRedirection
         }
 
 
-        /// <summary>
-        /// If true, any query string parameters the user hits the Origin URL with will be added to the Target URL.
-        /// </summary>
-        [DatabaseField]
-        public virtual bool RedirectionAppendQueryString
-        {
-            get
-            {
-                return ValidationHelper.GetBoolean(GetValue("RedirectionAppendQueryString"), true);
-            }
-            set
-            {
-                SetValue("RedirectionAppendQueryString", value);
-            }
-        }
-
-
-        /// <summary>
+		/// <summary>
         /// Redirection description.
         /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual string RedirectionDescription
         {
             get
@@ -175,15 +96,15 @@ namespace URLRedirection
             }
             set
             {
-                SetValue("RedirectionDescription", value, String.Empty);
+                SetValue("RedirectionDescription", value);
             }
         }
 
 
-        /// <summary>
+		/// <summary>
         /// Redirection site ID.
         /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual int RedirectionSiteID
         {
             get
@@ -197,15 +118,15 @@ namespace URLRedirection
         }
 
 
-        /// <summary>
+		/// <summary>
         /// Redirection type.
         /// </summary>
-        [DatabaseField]
+		[DatabaseField]
         public virtual string RedirectionType
         {
             get
             {
-                return ValidationHelper.GetString(GetValue("RedirectionType"), "301");
+                return ValidationHelper.GetString(GetValue("RedirectionType"), String.Empty);
             }
             set
             {
@@ -213,9 +134,8 @@ namespace URLRedirection
             }
         }
 
-
         /// <summary>
-        /// This redirect is applicable for these cultures.
+        /// Redirection cultures
         /// </summary>
         [DatabaseField]
         public virtual string RedirectionCultures
@@ -227,57 +147,6 @@ namespace URLRedirection
             set
             {
                 SetValue("RedirectionCultures", value, String.Empty);
-            }
-        }
-
-
-        /// <summary>
-        /// If set, this redirection will override the user's culture during the redirect..
-        /// </summary>
-        [DatabaseField]
-        public virtual string RedirectionCultureOverride
-        {
-            get
-            {
-                return ValidationHelper.GetString(GetValue("RedirectionCultureOverride"), String.Empty);
-            }
-            set
-            {
-                SetValue("RedirectionCultureOverride", value, String.Empty);
-            }
-        }
-
-
-        /// <summary>
-        /// Redirection table guid.
-        /// </summary>
-        [DatabaseField]
-        public virtual Guid RedirectionTableGuid
-        {
-            get
-            {
-                return ValidationHelper.GetGuid(GetValue("RedirectionTableGuid"), Guid.Empty);
-            }
-            set
-            {
-                SetValue("RedirectionTableGuid", value);
-            }
-        }
-
-
-        /// <summary>
-        /// Redirection table last modified.
-        /// </summary>
-        [DatabaseField]
-        public virtual DateTime RedirectionTableLastModified
-        {
-            get
-            {
-                return ValidationHelper.GetDateTime(GetValue("RedirectionTableLastModified"), DateTimeHelper.ZERO_TIME);
-            }
-            set
-            {
-                SetValue("RedirectionTableLastModified", value);
             }
         }
 

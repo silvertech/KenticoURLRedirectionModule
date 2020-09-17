@@ -7,7 +7,7 @@ using CMS.Helpers;
 using CMS.SiteProvider;
 
 namespace URLRedirection
-{
+{    
     /// <summary>
     /// Class providing <see cref="RedirectionTableInfo"/> management.
     /// </summary>
@@ -48,6 +48,7 @@ namespace URLRedirection
         public static void SetRedirectionTableInfo(RedirectionTableInfo infoObj)
         {
             ProviderObject.SetInfo(infoObj);
+            UpdateCache();
         }
 
 
@@ -58,6 +59,7 @@ namespace URLRedirection
         public static void DeleteRedirectionTableInfo(RedirectionTableInfo infoObj)
         {
             ProviderObject.DeleteInfo(infoObj);
+            UpdateCache();
         }
 
 
@@ -69,6 +71,13 @@ namespace URLRedirection
         {
             RedirectionTableInfo infoObj = GetRedirectionTableInfo(id);
             DeleteRedirectionTableInfo(infoObj);
+            UpdateCache();
+        }
+
+        private static void UpdateCache()
+        {
+            var lstOfRedirects = GetRedirectionTables().ToList();
+            CacheHelper.Add("RedirectionTables_CachedList", lstOfRedirects, null, DateTime.Now.AddDays(1), System.Web.Caching.Cache.NoSlidingExpiration);
         }
     }
 }

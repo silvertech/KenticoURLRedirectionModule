@@ -1,40 +1,37 @@
-[![Nuget](https://img.shields.io/badge/nuget-v12.0.3-blue.svg)](https://www.nuget.org/packages/KenticoURLRedirection/)
+[![Nuget](https://img.shields.io/badge/nuget-v12.0.4-blue.svg)](https://www.nuget.org/packages/KenticoURLRedirection/)
 # Kentico 12 URL Redirection Module
-This module adds an interface in the CMS to allow a user to edit and manage URL Redirects in one place. The module supports multi-site instances and multi-culture sites (more details below). The latest version of this module is Version 12.0.3. The source code for this module is included in this repo if you wish to clone and modify it anyway you see fit. 
+This module adds an interface in the CMS to allow a user to edit and manage URL Redirects in one place. The module supports multi-site instances and multi-culture sites (more details below). The latest version of this module is Version 12.0.4. The source code for this module is included in this repo if you wish to clone and modify it anyway you see fit. 
+
+Changes from 12.0.3:
+ - A revert of many of the changes made in 12.0.3 due to a multitude of issues found during testing of this version. 12.0.4 reverts most of the code base back to what the was module in 12.0.2.
+ - Bug fix to address default site not being set on save if left on value "(current site)"
 
 ## Compatibility
 
  - .NET 4.6.1 or greater
- - Kentico Version 12.0.29 or greater
+ - Kentico Version 12.0.52 or greater
  - Compatible with all development styles of Kentico (MVC, Portal Engine, ASPX, etc.)
 
 ## Installation Instructions
 
-Install the latest version of the Kentico URL Redirection [nuget package](https://www.nuget.org/packages/KenticoURLRedirection/) to your **CMSApp** project `Install-Package KenticoUrlRedirection`. 
+**PLEASE NOTE:** Due to 12.0.4 being a major revert of 12.0.3, you must completely uninstall the module if you are running this version before installing the latest version. Not doing so may have unintended side effects.
 
-After installation, rebuild and check the event log of the site and you should see a line like this:
+Install the latest version of the Kentico URL Redirection [nuget package](https://www.nuget.org/packages/KenticoURLRedirection/)
+`Install-Package KenticoUrlRedirection`
+**For MVC:** Install this nuget package **ONLY** to the CMSApp project of your MVC solution. Then, add a reference to the DLL to your MVC project. Do not install this nuget package into both the CMSApp and MVC projects.
+
+After installation, check the event log of the site and you should see a line like this:
 ![Module Installed Successfully](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/Readme%20Assets/moduleintalled-eventlog.png?raw=true)
 
 To update the module to a more recent version, simply update the NuGet package.
 
-**MVC Specific Setup**
-If you are installing this package into a site utilizing Kentico MVC, follow these steps:
-
- 1. Like noted above, install the NuGet package to your **CMSApp** project
- 2. Go to your MVC project/solution
- 3. Right click on "References" and click on "Add Reference"
- 4. Click on **Browse**
- 5. Add a reference to **URLRedirection.dll**. The DLL can be fould at the path ~\\*Project_Root*\packages\URLRedirection.12.0.3\lib
- 6. Rebuild the project
-
 ## LIMITATIONS/REQUIRED SETUP
-**IMPORTANT -** Please note that there are a few requirements with this module in order to determine the proper domain the redirect should use when the target is a relative path.
+**IMPORTANT -** Please note that there are a few limitations with this module that require that your site be configured a certain way to work properly. Look below and take note of the required setup for your configuration.
+
 
 **Single Site and Single Culture**
 
-If your site is a single domain and single culture, you should specify the default visitor culture as the default culture of your site. If this is not set, the redirect will use the request's domain and may default to en-US culture if not determined.
-
-To do this, follow these steps:
+If your site is a single domain and single culture, you **must** specify the default visitor culture as the default culture of your site. If this is not set, the redirects will not work. To do this, follow these steps:
 
  1. Go to Applications>Configuration>Sites
  2. Edit the site
@@ -43,14 +40,39 @@ To do this, follow these steps:
  4. Click **Save**
 
 
+**Multiple Sites and Single Culture**
+
+If your site is a single culture but multiple domains, then the above steps for "Single Site and Single Culture" must be done on **each** of your Kentico sites in your CMS.
+
+
 **Single Site and Multiple Cultures - Domain Aliases**
 
-If your site is a single site but uses different domain aliases for each culture then you must specify which language each domain is.
+If your site is a single site but uses different domain aliases for each culture then you must specify which language each domain:
 
  1. Follow the steps for "Single Site and Single Culture" and set the main domain's culture to your primary culture
  2. Click on **Domain aliases** in the left hand tabs
  3. For each domain aliases, select the appropriate culture. In this example, **de.** is German and **fr.** is French
 ![Multiple Cultures Domain Aliases](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/Readme%20Assets/singlesite-domainaliases.png?raw=true)
+
+
+**Multiple Sites and Multiple Cultures - Domain Aliases**
+
+If you have multiple sites and unique domain aliases for the different culture on each site, then the above for "Single Site and Multiple Cultures - Domain Aliases" must be done on **each** of yoru Kentico sites in your CMS.
+
+
+**Single Site and Multiple Cultures - Language Aliases**
+
+If you have a single site that has multiple cultures but use language aliases as opposed to unique domain aliases, then no additional setup is needed. The main site domain will be used in conjunction with the configured language aliases to determine if a redirect applies to the site/culture.
+
+
+**Multiple Sites and Multiple Cultures - Language Aliases**
+
+Same as "Single Site and Multiple Cultures - Language Aliases"
+
+
+**Multiple Cultures - Language Aliases AND Domain Aliases**
+
+This module is not supported for sites utilizing a mixture of both language URL aliases and language sub-domains.
 
 ## Module Overview
 The Kentico URL Redirection module contains one class, **Redirection Table**, that is not customizable. The class' fields are as follows:
@@ -58,45 +80,22 @@ The Kentico URL Redirection module contains one class, **Redirection Table**, th
 | Field Name  | Data Type | Form Control | Descrpiton |
 |--|--|--|--|
 | RedirectionTableID | Integer | N/A (Not Editable) | Unique ID of the redirection item |
-| RedirectionEnabled | bool | Checkbox | Only enabled redirects will be leveraged in redirection lookups.  Uncheck to disable. |
-| RedirectionOriginalURL | Text (2000) | Text Box | URL Alias that will be redirected. Ex: **/original-url** .  You can us {culture} as a placeholder for the culture in your URL, and you can add Query String parameters (coupled with Exact Match) to require a match on query string values additionally. |
-| RedirectionExactMatch | bool | Check box | If true, the Original Url must match exactly, including the query strings and/or hash. |
+| RedirectionOriginalURL | Text (2000) | Text Box | URL Alias that will be redirected. Ex: **/original-url** |
 | RedirectionTargetURL | Text (2000) | URL Selector | Internal alias or External URL that the Original URL field will be redirected to. Ex: **/target-url** Ex: **https://www.external-domain.com** |
-| RedirectionAppendQueryString | bool | Checkbox | If true, any query string parameters the user hits the Origin URL with will be added to the Target URL's listing.  Duplications are automatically handled. |
 | RedirectionDescription | Long Text | Text Area | A field that allows a content editor to describe a redirect or enter the purpose of a redirect |
 | RedirectionSiteID | Integer | Site Selector | Drop down list that allows a user to specify which site the redirect is for. Default is the current site the user is on. |
 | RedirectionType | Text (3) | Drop Down List | Allows the user to specify if the redirect is a 301 or 302 redirect. |
 | RedirectionCultures | Text (4000) | Multiple Choice | Allows the user to specify which cultures the redirection should be enabled for. The default selected will be the Cultures available for the current site, although all cultures currently assigned to the site will be shown. |
-| RedirectionCultureOverride | Text (10) | Drop Down List | If set, this redirection will override the user's culture during the redirect. |
 
 The module can be accessed by going to **Applications>Custom>URL Redirection**.
-
-## URL Redirect Settings
-In Settings > URLS and SEO > Redirections, there are the following settings:
-
-| Name  | Data Type | Form Control | Descrpiton |
-|--|--|--|--|
-| Path Prefixes to Ignore | LongText | TextArea | One per line, any requests with a prefix of any specified will not be processed, useful for speeding up non-page requests |
-| Culture In Url Settings | int (enum) | Drop down list | If your site uses Culture in the URLs, this can be configured to automatically detect and handle cultures through it.  Options are None, Prefix, Prefix before Virtual directory, and Postfixed  |
-| Culture Query String Param | Text | Textbox | If set, the URL Redirect will honor cultures passed through this query string.  |
-| Culture Format (No Alias) | int (enum) | Drop down list | What culture format in the URL your site uses, options are xx-XX and xx (example: en-US or en) |
-
-## Event Hooks
-This module has an `UrlRedirectionEvents.GetRequestCulture` Event that you can hook into using normal Kentico Global Event Hooks in a custom loader module.  This allows you to customize how you determine the request's culture, and any culture existing in the URL.  It handles these automatically as best as possible, but may require customization through these Event Hooks to meet your specific requirements.
-
-## Exact Matches and Hash
-Exact Match will match based on the URL and the Query String, but since Hash values are not passed to the server, they will are not tracked for matching.
 
 ## License
 This project uses a standard MIT license which can be found [here](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/LICENSE).
 
 ## Contribution
-Contributions to this module are welcome. All the source files for this module are included and you just need to add the project to a Kentico Web Application solution and you can start editing anything you like. A ZIP export of the most recent, _unsealed_, version of the module is also included in the root of this repo so you can easily import the module database items into your Kentico project through the **Sites** application. This file is named **KenticoURLRedirection_12.0.3.zip** and will be needed if you want to edit anything related to the module inside the CMS.
+Contributions to this module are welcome. All the source files for this module are included and you just need to add the project to a Kentico Web Application solution and you can start editing anything you like. A ZIP export of the most recent, _unsealed_, version of the module is also included in the root of this repo so you can easily import the module database items into your Kentico project through the **Sites** application. This file is named **KenticoURLRedirection_12.0.2.zip** and will be needed if you want to edit anything related to the module inside the CMS.
 
  Submit a pull request to the repo with your code changes as well as an updated ZIP file (if CMS changes were made) and we will review and provide feedback. We will also update the NuGet package to a new version once we approve your changes.
 
 ## Support
 Any bugs can be listed as issues here in GitHub or can be sent to our email alerts@silvertech.com. We will respond as soon as we can.
-
-## Special Thanks
-Special thanks to [KenticoDevTrev](https://github.com/KenticoDevTrev) and Heartland Business Systems for their large update to the module.
