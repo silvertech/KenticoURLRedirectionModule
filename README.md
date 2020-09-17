@@ -93,7 +93,7 @@ The module can be accessed by going to **Applications>Custom>URL Redirection**.
 This project uses a standard MIT license which can be found [here](https://github.com/silvertech/KenticoURLRedirectionModule/blob/master/LICENSE).
 
 ## Contribution
-Contributions to this module are welcome. All the source files for this module are included and you just need to add the project to a Kentico Web Application solution and you can start editing anything you like. A ZIP export of the most recent, _unsealed_, version of the module is also included in the root of this repo so you can easily import the module database items into your Kentico project through the **Sites** application. This file is named **KenticoURLRedirection_12.0.2.zip** and will be needed if you want to edit anything related to the module inside the CMS.
+Contributions to this module are welcome. All the source files for this module are included and you just need to add the project to a Kentico Web Application solution and you can start editing anything you like. A ZIP export of the most recent, _unsealed_, version of the module is also included in the root of this repo so you can easily import the module database items into your Kentico project through the **Sites** application. This file is named **KenticoURLRedirection_12.0.4.zip** and will be needed if you want to edit anything related to the module inside the CMS.
 
  Submit a pull request to the repo with your code changes as well as an updated ZIP file (if CMS changes were made) and we will review and provide feedback. We will also update the NuGet package to a new version once we approve your changes.
 
