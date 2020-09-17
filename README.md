@@ -3,7 +3,7 @@
 This module adds an interface in the CMS to allow a user to edit and manage URL Redirects in one place. The module supports multi-site instances and multi-culture sites (more details below). The latest version of this module is Version 12.0.4. The source code for this module is included in this repo if you wish to clone and modify it anyway you see fit. 
 
 Changes from 12.0.3:
- - A revert of many of the changes made in 12.0.3 due to a multitude of issues found during testing of this version. 12.0.4 reverts most of the code base back to what the was module in 12.0.2.
+ - A revert of many of the changes made in 12.0.3 due to a multitude of issues found during testing of this version. 12.0.4 reverts most of the code base back to what the module was in 12.0.2.
  - Bug fix to address default site not being set on save if left on value "(current site)"
 
 ## Compatibility
