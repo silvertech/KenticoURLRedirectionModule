@@ -18,6 +18,7 @@ Changes from 12.0.3:
 
 Install the latest version of the Kentico URL Redirection [nuget package](https://www.nuget.org/packages/KenticoURLRedirection/)
 `Install-Package KenticoUrlRedirection`
+
 **For MVC:** Install this nuget package **ONLY** to the CMSApp project of your MVC solution. Then, add a reference to the DLL to your MVC project. Do not install this nuget package into both the CMSApp and MVC projects.
 
 After installation, check the event log of the site and you should see a line like this:
